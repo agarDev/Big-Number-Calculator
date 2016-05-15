@@ -16,10 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.math.BigDecimal;
@@ -41,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private static long back_pressed;
     private SQLiteDatabase calcDB = null;
     private String tableName = "bigNumCalcHistory", dbName = "bigNumCalcHistory";
-    private AdView adView;
-    private InterstitialAd mInterstitialAd;
-    private int mInterstitialAdCounter = 0;
     final Context context = this;
 
 
@@ -95,31 +88,6 @@ public class MainActivity extends AppCompatActivity {
         CirclePageIndicator titleIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
         titleIndicator.setViewPager(viewPager);
 
-        /** adview */
-        adView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest
-                                    .Builder()
-                                    //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                                    .build();
-        adView.loadAd(adRequest);
-
-
-        /** Interstitial ad show */
-        /*mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getString(R.string.inter_ad_unit_id));
-
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                requestNewInterstitial();
-                //initiate the many clicks
-                mInterstitialAdCounter = 0;
-            }
-        });
-        requestNewInterstitial();*/
-
-
-
 
         /** clear all button */
         clearBtn.setOnClickListener(new View.OnClickListener() {
@@ -155,91 +123,81 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
-    /*private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder()
-                //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        mInterstitialAd.loadAd(adRequest);
-    }*/
-
-
     /** Handling Onclick Event of All Buttons */
     public void onClickCalcButtons(View v){
         minKeybrd();
         //mInterstitialAdCounter++;
-        switch(v.getId()){
+        switch(v.getId()) {
             case R.id.plus:
-                if(!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")){
+                if (!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")) {
                     first_dataDec = new BigDecimal(String.valueOf(numOne.getText()));
                     second_dataDec = new BigDecimal(String.valueOf(numTwo.getText()));
                     result.setText(String.valueOf(first_dataDec.add(second_dataDec)));
                     addtoDBDec(first_dataDec, second_dataDec, result.getText().toString());
                     operationApplied.setText(operationAppliedString + "Addition");
                     clearall();
-                }else{
+                } else {
                     result.setText("Numbers cannot be empty !");
                 }
                 break;
             case R.id.minus:
-                if(!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")){
+                if (!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")) {
                     first_dataDec = new BigDecimal(String.valueOf(numOne.getText()));
                     second_dataDec = new BigDecimal(String.valueOf(numTwo.getText()));
                     result.setText((first_dataDec.subtract(second_dataDec)).toString());
                     addtoDBDec(first_dataDec, second_dataDec, result.getText().toString());
                     operationApplied.setText(operationAppliedString + "Subtraction");
                     clearall();
-                }else{
+                } else {
                     result.setText("Numbers cannot be empty !");
                 }
                 break;
 
 
             case R.id.multiply:
-                if(!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")){
+                if (!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")) {
                     first_dataDec = new BigDecimal(String.valueOf(numOne.getText()));
                     second_dataDec = new BigDecimal(String.valueOf(numTwo.getText()));
                     result.setText(String.valueOf(first_dataDec.multiply(second_dataDec)));
                     addtoDBDec(first_dataDec, second_dataDec, result.getText().toString());
-                    operationApplied.setText(operationAppliedString+"Multiply");
+                    operationApplied.setText(operationAppliedString + "Multiply");
                     clearall();
-                }else{
+                } else {
                     result.setText("Numbers cannot be empty !");
                 }
                 break;
 
 
             case R.id.divide:
-                if(!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")){
+                if (!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")) {
                     first_dataDec = new BigDecimal(String.valueOf(numOne.getText()));
                     second_dataDec = new BigDecimal(String.valueOf(numTwo.getText()));
                     result.setText(String.valueOf(first_dataDec.divide(second_dataDec, 100, RoundingMode.HALF_UP)));
                     addtoDBDec(first_dataDec, second_dataDec, result.getText().toString());
                     operationApplied.setText(operationAppliedString + "Division");
                     clearall();
-                }else{
+                } else {
                     result.setText("Numbers cannot be empty !");
                 }
                 break;
 
 
             case R.id.mod:
-                if(!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")){
+                if (!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")) {
                     first_data = new BigDecimal(String.valueOf(numOne.getText())).toBigInteger();
                     second_data = new BigDecimal(String.valueOf(numTwo.getText())).toBigInteger();
                     result.setText(String.valueOf(first_data.mod(second_data)));
                     addtoDBInt(first_data, second_data, result.getText().toString());
-                    operationApplied.setText(operationAppliedString+"Mod");
+                    operationApplied.setText(operationAppliedString + "Mod");
                     clearall();
-                }else{
+                } else {
                     result.setText("Numbers cannot be empty !");
                 }
                 break;
 
 
             case R.id.modinverse:
-                if(!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")){
+                if (!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")) {
                     first_data = new BigDecimal(String.valueOf(numOne.getText())).toBigInteger();
                     second_data = new BigDecimal(String.valueOf(numTwo.getText())).toBigInteger();
                     if (first_data.gcd(second_data).equals(BigInteger.ONE)) {
@@ -248,104 +206,98 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         result.setText("Given numbers are not prime to each other.");
                     }
-                    operationApplied.setText(operationAppliedString+"Mod Inverse");
+                    operationApplied.setText(operationAppliedString + "Mod Inverse");
                     clearall();
-                }else{
+                } else {
                     result.setText("Numbers cannot be empty !");
                 }
                 break;
 
 
             case R.id.isPrime:
-                if(!(numOne.getText().toString()).equals("")){
+                if (!(numOne.getText().toString()).equals("")) {
                     first_data = new BigDecimal(String.valueOf(numOne.getText())).toBigInteger();
                     //certainty hardcoded to large number
-                    if(first_data.isProbablePrime(250)) {
+                    if (first_data.isProbablePrime(250)) {
                         result.setText("Number is a Prime Number.");
-                    }else{
+                    } else {
                         result.setText("Number is not a Prime Number.");
                     }
-                    operationApplied.setText(operationAppliedString+"Is Prime ?");
+                    operationApplied.setText(operationAppliedString + "Is Prime ?");
                     clearall();
-                }else{
+                } else {
                     result.setText("Numbers cannot be empty !");
                 }
                 break;
             case R.id.compareTo:
-                if(!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")){
+                if (!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")) {
                     first_dataDec = new BigDecimal(String.valueOf(numOne.getText()));
                     second_dataDec = new BigDecimal(String.valueOf(numTwo.getText()));
                     int resultFinal = first_dataDec.compareTo(second_dataDec);
-                    String resultText = (resultFinal == 0 ? "Both Numbers are Equal" : (resultFinal > 0 ? "First Number is Greater than Second Number" : "Second Number is Greater than First Number" ));
+                    String resultText = (resultFinal == 0 ? "Both Numbers are Equal" : (resultFinal > 0 ? "First Number is Greater than Second Number" : "Second Number is Greater than First Number"));
                     result.setText(resultText);
                     addtoDBDec(first_dataDec, second_dataDec, String.valueOf(resultFinal));
-                    operationApplied.setText(operationAppliedString+"Compare to");
+                    operationApplied.setText(operationAppliedString + "Compare to");
                     clearall();
-                }else{
+                } else {
                     result.setText("Numbers cannot be empty !");
                 }
                 break;
             case R.id.lShift:
-                if(!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")){
+                if (!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")) {
                     first_data = new BigDecimal(String.valueOf(numOne.getText())).toBigInteger();
                     second_data = new BigDecimal(String.valueOf(numTwo.getText())).toBigInteger();
                     result.setText(String.valueOf(first_data.shiftLeft(second_data.intValue())));
                     addtoDBDec(first_dataDec, second_dataDec, result.getText().toString());
                     operationApplied.setText(operationAppliedString + "Left Shift");
                     clearall();
-                }else{
+                } else {
                     result.setText("Numbers cannot be empty !");
                 }
                 break;
             case R.id.rShift:
-                if(!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")){
+                if (!(numOne.getText().toString()).equals("") && !(numTwo.getText().toString()).equals("")) {
                     first_data = new BigDecimal(String.valueOf(numOne.getText())).toBigInteger();
                     second_data = new BigDecimal(String.valueOf(numTwo.getText())).toBigInteger();
                     result.setText(String.valueOf(first_data.shiftRight(second_data.intValue())));
                     addtoDBDec(first_dataDec, second_dataDec, result.getText().toString());
                     operationApplied.setText(operationAppliedString + "Right Shift");
                     clearall();
-                }else{
+                } else {
                     result.setText("Numbers cannot be empty !");
                 }
                 break;
             case R.id.logOf:
-                if(!(numOne.getText().toString()).equals("")){
+                if (!(numOne.getText().toString()).equals("")) {
                     first_data = new BigDecimal(String.valueOf(numOne.getText())).toBigInteger();
                     result.setText(String.valueOf(logBigInteger(first_data)));
-                    operationApplied.setText(operationAppliedString+"Logarithm");
+                    operationApplied.setText(operationAppliedString + "Logarithm");
                     clearall();
-                }else{
+                } else {
                     result.setText("Numbers cannot be empty !");
                 }
                 break;
             case R.id.squareOf:
-                if(!(numOne.getText().toString()).equals("")){
+                if (!(numOne.getText().toString()).equals("")) {
                     first_data = new BigDecimal(String.valueOf(numOne.getText())).toBigInteger();
                     result.setText(String.valueOf(first_data.multiply(first_data)));
-                    operationApplied.setText(operationAppliedString+"Square");
+                    operationApplied.setText(operationAppliedString + "Square");
                     clearall();
-                }else{
+                } else {
                     result.setText("Numbers cannot be empty !");
                 }
                 break;
             case R.id.cubeOf:
-                if(!(numOne.getText().toString()).equals("")){
+                if (!(numOne.getText().toString()).equals("")) {
                     first_data = new BigDecimal(String.valueOf(numOne.getText())).toBigInteger();
                     result.setText(String.valueOf((first_data.multiply(first_data)).multiply(first_data)));
-                    operationApplied.setText(operationAppliedString+"Cube");
+                    operationApplied.setText(operationAppliedString + "Cube");
                     clearall();
-                }else{
+                } else {
                     result.setText("Numbers cannot be empty !");
                 }
                 break;
         }
-        /*if(mInterstitialAdCounter >= 5) {
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-                mInterstitialAdCounter = 0;
-            }
-        }*/
     }
 
 
@@ -466,9 +418,6 @@ public class MainActivity extends AppCompatActivity {
     /** Called when leaving the activity */
     @Override
     public void onPause() {
-        if (adView != null) {
-            adView.pause();
-        }
         super.onPause();
     }
 
@@ -478,9 +427,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (adView != null) {
-            adView.resume();
-        }
     }
 
 
@@ -488,9 +434,6 @@ public class MainActivity extends AppCompatActivity {
     /** Called before the activity is destroyed */
     @Override
     public void onDestroy() {
-        if (adView != null) {
-            adView.destroy();
-        }
         super.onDestroy();
     }
 
