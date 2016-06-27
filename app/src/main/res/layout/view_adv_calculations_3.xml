@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Advanced Operations"
-        android:id="@+id/adv_2_BottomText"
+        android:id="@+id/adv_3_BottomText"
         android:layout_weight="1"
         android:layout_marginBottom="10dp"
         android:textColor="#ffffff"
@@ -29,8 +29,6 @@
         android:layout_weight="1"
         android:layout_marginBottom="5dp">
 
-
-
         <info.hoang8f.widget.FButton
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -39,13 +37,15 @@
             fbutton:cornerRadius="1dp"
             fbutton:buttonColor="@color/fbutton_color_green_sea"
             android:textColor="#ffffff"
-            android:text="Left Shift"
+            android:text="X ^ Y"
             android:layout_weight="1"
-            android:id="@+id/lShift"
+            android:id="@+id/raisedto"
             android:textSize="15dp"
             android:layout_marginRight="3dp"
             android:hapticFeedbackEnabled="true"
-            android:onClick="onClickCalcButtons" />
+            android:onClick="onClickCalcButtons"
+            android:layout_marginLeft="2dp" />
+
 
         <info.hoang8f.widget.FButton
             android:layout_width="wrap_content"
@@ -55,13 +55,32 @@
             fbutton:cornerRadius="1dp"
             fbutton:buttonColor="@color/fbutton_color_green_sea"
             android:textColor="#ffffff"
-            android:text="Right Shift"
+            android:text="Compare To"
             android:layout_weight="1"
-            android:id="@+id/rShift"
+            android:id="@+id/compareTo"
             android:textSize="15dp"
+            android:layout_marginRight="3dp"
             android:hapticFeedbackEnabled="true"
             android:onClick="onClickCalcButtons"
-            android:layout_marginRight="2dp" />
+            android:layout_marginLeft="2dp" />
+
+        <info.hoang8f.widget.FButton
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="1dp"
+            fbutton:cornerRadius="1dp"
+            fbutton:buttonColor="@color/fbutton_color_green_sea"
+            android:textColor="#ffffff"
+            android:text="Factorial ( X! )"
+            android:layout_weight="1"
+            android:id="@+id/factorial"
+            android:textSize="15dp"
+            android:layout_marginRight="3dp"
+            android:hapticFeedbackEnabled="true"
+            android:onClick="onClickCalcButtons"
+            android:layout_marginLeft="2dp" />
+
     </LinearLayout>
 
 </LinearLayout>
