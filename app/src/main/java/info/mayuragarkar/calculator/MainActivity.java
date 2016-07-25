@@ -1,6 +1,7 @@
 package info.mayuragarkar.calculator;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -13,9 +14,14 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.viewpagerindicator.CirclePageIndicator;
+import com.yarolegovich.lovelydialog.LovelyCustomDialog;
+import com.yarolegovich.lovelydialog.LovelyInfoDialog;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
+import com.yarolegovich.lovelydialog.LovelyTextInputDialog;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -79,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         /** make operation applied empty on run time */
         operationApplied.setText("");
 
-
         /** Make View Pager Initialized Here */
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new CustomPagerAdapter(this));
@@ -120,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
 
@@ -339,11 +345,22 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 String version = pInfo.versionName;
-                new SweetAlertDialog(this, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
-                        .setTitleText("About")
-                        .setContentText("Big Number Calculator v"+version+"\n\nDesigned & Developed By:\n\nMayur Agarkar (Z-Day Apps)")
-                        .setCustomImage(R.mipmap.ic_launcher)
-                        .setConfirmText("Sweet!")
+                new LovelyInfoDialog(this)
+                        .setTopColorRes(R.color.colorAccent)
+                        .setIcon(R.drawable.ic_info_white_18dp)
+                        //This will add Don't show again checkbox to the dialog. You can pass any ID as argument
+                        .setTitle("About")
+                        .setMessage("\nBig Number Calculator v"+version+"\n\nDesigned & Developed By:\nMayur Agarkar (Z-Day Apps)")
+                        .show();
+                break;
+            case R.id.action_libs:
+                /*Intent intent = new Intent(this, LibsCards.class);
+                startActivity(intent);*/
+                new LovelyCustomDialog(this)
+                        .setView(R.layout.activity_libs_cards)
+                        .setTopColorRes(R.color.colorAccent)
+                        .setTitle("Licenses and Libraries Used")
+                        .setIcon(R.drawable.ic_info_white_18dp)
                         .show();
                 break;
         }
